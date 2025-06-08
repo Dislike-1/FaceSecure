@@ -1,0 +1,120 @@
+/* Home.css */
+
+.home-container {
+    background-color: #f5faff;
+    width: 500px;
+    height: 550px;
+    padding: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    text-align: center;
+    position: absolute;    
+    top: 50%;                 
+    left: 50%;               
+    transform: translate(-50%, -50%); 
+    margin: 50px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.336);
+  }
+  
+  h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    margin: 10px 0;
+    font-size: 1.1em;
+  }
+  
+  .profile-card {
+    background: #ffffff;
+    border: 1px solid #d0e8ff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 300px;
+    text-align: left;
+
+  }
+  
+  .profile-card h3 {
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+  
+  .home-actions {
+    margin-top: 30px;
+  }
+  
+  .home-actions button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    margin: 0 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+  }
+  
+  .home-actions button:hover {
+    transform: scale(0.9);
+    background-color: #0056b3;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+  }
+  
+  ul li {
+    background-color: #eaf4ff;
+    margin: 8px auto;
+    padding: 10px;
+    border-radius: 6px;
+    max-width: 400px;
+    font-size: 0.95em;
+    color: #333;
+  }
+  
+  body.dark {
+    background-color: #192943;
+    color: white;
+  }
+  body.dark #welcome{
+    color: #f0f0f0;
+
+  }
+  body.dark .home-container {
+    background-color: #121c2b;
+    color: #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  }
+  
+  body.dark .profile-card {
+    background-color: #1e2a3a;
+    border: 1px solid #2e3d55;
+    color: #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  body.dark .profile-card h3 {
+    color: #66b2ff;
+  }
+  
+  body.dark .home-actions button {
+    background-color: #1e90ff;
+  }
+  
+  body.dark .home-actions button:hover {
+    background-color: #1565c0;
+  }
+  
+  body.dark ul li {
+    background-color: #1b2838;
+    color: #e0e0e0;
+  }
