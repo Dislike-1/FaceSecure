@@ -123,8 +123,53 @@ def register(request):
 #         except Exception as e:
 #             return JsonResponse({"error": str(e)}, status=500)
 
+# @api_view(['POST'])
+# def login(request):  # View name remains 'login'
+#     email = request.data.get('email')
+#     face_image_data = request.data.get('face_image')
+
+#     if not email or not face_image_data:
+#         return JsonResponse({"error": "Missing required fields"}, status=400)
+
+#     try:
+#         # Handle base64-encoded image string
+#         if "," in face_image_data:
+#             face_image_data = face_image_data.split(',')[1]
+#         image_data = base64.b64decode(face_image_data)
+
+#         # Convert image to RGB numpy array
+#         image = Image.open(BytesIO(image_data)).convert('RGB')
+#         rgb_image = np.array(image)
+
+#         # Extract face encodings
+#         face_encodings = face_recognition.face_encodings(rgb_image)
+#         if not face_encodings:
+#             return JsonResponse({"error": "No face detected in the image."}, status=400)
+
+#         face_encoding = face_encodings[0]
+
+#         # Look up user by email
+#         try:
+#             user = CustomUser.objects.get(email=email)
+#         except CustomUser.DoesNotExist:
+#             return JsonResponse({"error": "User not found."}, status=404)
+
+#         # Parse stored face encoding
+#         known_encoding = list(map(float, user.face_encoding.split(',')))
+
+#         match = face_recognition.compare_faces([known_encoding], face_encoding)
+
+#         if match[0]:
+#             return JsonResponse({"message": "Login successful!", "username": user.username}, status=200)
+#         else:
+#             return JsonResponse({"error": "Face does not match."}, status=401)
+
+#     except Exception as e:
+#         return JsonResponse({"error": str(e)}, status=500)
+
+# Latest
 @api_view(['POST'])
-def login(request):  # View name remains 'login'
+def login(request):
     email = request.data.get('email')
     face_image_data = request.data.get('face_image')
 
@@ -141,7 +186,7 @@ def login(request):  # View name remains 'login'
         image = Image.open(BytesIO(image_data)).convert('RGB')
         rgb_image = np.array(image)
 
-        # Extract face encodings
+        # Extract face encodings from input image
         face_encodings = face_recognition.face_encodings(rgb_image)
         if not face_encodings:
             return JsonResponse({"error": "No face detected in the image."}, status=400)
@@ -154,19 +199,21 @@ def login(request):  # View name remains 'login'
         except CustomUser.DoesNotExist:
             return JsonResponse({"error": "User not found."}, status=404)
 
-        # Parse stored face encoding
+        # Parse stored encoding
         known_encoding = list(map(float, user.face_encoding.split(',')))
 
-        match = face_recognition.compare_faces([known_encoding], face_encoding)
+        # Face comparison with strict tolerance
+        match = face_recognition.compare_faces([known_encoding], face_encoding, tolerance=0.45)
+        distance = face_recognition.face_distance([known_encoding], face_encoding)[0]
 
-        if match[0]:
+        # Final decision
+        if match[0] and distance < 0.45:
             return JsonResponse({"message": "Login successful!", "username": user.username}, status=200)
         else:
             return JsonResponse({"error": "Face does not match."}, status=401)
 
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
-
 
 # @api_view(['POST'])
 # def password_login(request):
